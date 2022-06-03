@@ -3,7 +3,8 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
 function Register(props) {
-    const url = 'http://localhost:7000/register'
+    // const url = 'http://localhost:7000/register'
+    const url = 'https://node-server-instagram.herokuapp.com/register'
     const [disable, setDisable] = useState(true)
     const [error, setError] = useState('')
     const [spinStyle, setSpinStyle] = useState('')
@@ -22,6 +23,8 @@ function Register(props) {
                 setSpinStyle('')
                 setDisable(false)
             }
+        }).catch((err)=>{
+            console.log(err)
         })
     }
 
@@ -29,13 +32,15 @@ function Register(props) {
         setUserInfo({...userInfo, [key]: value})
         if (userInfo.mobileNumber !== '' && userInfo.email !== '' && userInfo.fullName !== '' && userInfo.userName !== '' && userInfo.pword !== '') {
             setDisable(false)
+            setSpinStyle('')
         } else {
             setDisable(true)
         }
     }
     return (
         <div>
-            <div className="container w-25 mt-4 bg-white border" style={{fontFamily: 'Gabriola'}}>
+            <div className='d-flex justify-content-center'>
+            <div className="col-md-4 col-lg-3 col-sm-8 mt-4 bg-white border" style={{fontFamily: 'Gabriola'}}>
                 <p className="text-center h1 font-weight-bold pt-5">Instagram</p>
                 <p className='container text-center text-secondary py-1 h5 w-75'>Sign up to see photos and videos from your friends</p>
                 <div className="mt-2 mx-4" >
@@ -64,8 +69,11 @@ function Register(props) {
                     <p className='text-center'>By signing up, you agree to our Terms , Data Policy and Cookies Policy.</p>
                 </div>
             </div>
-            <div className='container w-25 mt-2 bg-white border' style={{fontFamily: 'Gabriola'}}>
+            </div>
+            <div className='d-flex justify-content-center'>
+            <div className='col-md-4 col-lg-3 col-sm-8 mt-2 bg-white border' style={{fontFamily: 'Gabriola'}}>
                 <p className='text-center pt-3'>Have an account? <a href='/login' className='font-weight-bold'>Log In</a> </p>
+            </div>
             </div>
         </div>
     )

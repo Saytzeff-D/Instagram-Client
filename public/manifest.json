@@ -1,6 +1,6 @@
 {
-  "short_name": "Instagram App",
-  "name": "Create React App Sample",
+  "short_name": "Instagram",
+  "name": "Create Instagram App Sample",
   "icons": [
     {
       "src": "favicon.ico",
