@@ -8,7 +8,7 @@ function Register(props) {
     const [disable, setDisable] = useState(true)
     const [error, setError] = useState('')
     const [spinStyle, setSpinStyle] = useState('')
-    const [userInfo, setUserInfo] = useState({mobileNumber: '', email: '', fullName: '', userName: '', pword: ''})
+    const [userInfo, setUserInfo] = useState({mobileNumber: '', email: '', fullName: '', userName: '', pword: '', bio: '', image: ''})
     const naviagate = useNavigate()
     const registerUser = ()=>{
         setSpinStyle('spinner-grow spinner-grow-sm')
