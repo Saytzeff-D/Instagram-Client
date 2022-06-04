@@ -28,7 +28,7 @@ function Login(props) {
             let info = {email: loginInfo.loginData, pword: loginInfo.pword}
             axios.post(url, info).then((res)=>{
                 if (res.data.msg === 'Success') {
-                    console.log('User Login')
+                    navigate('/dashboard')
                     setSpinStyle('')
                     setDisable(false)
                 } else {
@@ -41,7 +41,7 @@ function Login(props) {
             let info = {mobileNumber: loginInfo.loginData, pword: loginInfo.pword}
             axios.post(url, info).then((res)=>{
                 if (res.data.msg === 'Success') {
-                    console.log('User Login')
+                    navigate('/dashboard')
                     setSpinStyle('')
                     setDisable(false)
                 } else {
