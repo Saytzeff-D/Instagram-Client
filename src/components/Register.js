@@ -8,7 +8,8 @@ function Register(props) {
     const [disable, setDisable] = useState(true)
     const [error, setError] = useState('')
     const [spinStyle, setSpinStyle] = useState('')
-    const [userInfo, setUserInfo] = useState({mobileNumber: '', email: '', fullName: '', userName: '', pword: '', bio: '', image: ''})
+    const [passwordType, setPasswordType] = useState('password')
+    const [userInfo, setUserInfo] = useState({mobileNumber: '', email: '', fullName: '', userName: '', pword: '', bio: '', image_url: ''})
     const naviagate = useNavigate()
     const registerUser = ()=>{
         setSpinStyle('spinner-grow spinner-grow-sm')
@@ -37,6 +38,14 @@ function Register(props) {
             setDisable(true)
         }
     }
+    const togglePassword =()=>{
+        if(passwordType==="password")
+        {
+         setPasswordType("text")
+         return;
+        }
+        setPasswordType("password")
+      }
     return (
         <div>
             <div className='d-flex justify-content-center'>
@@ -62,7 +71,12 @@ function Register(props) {
 
                     <input onChange={(e)=>handleInput(e.target.name, e.target.value)} type="text" className='form-control m-1' name='userName' value={userInfo.userName} placeholder="Username" />
 
-                    <input onChange={(e)=>handleInput(e.target.name, e.target.value)} type="password" className='form-control m-1' name='pword' value={userInfo.pword} placeholder="Password" />
+                    <div className='input-group m-1'>
+                        <input onChange={(e)=>handleInput(e.target.name, e.target.value)} type={passwordType} className='form-control' name='pword' value={userInfo.pword} placeholder="Password" />
+                        <div className='input-group-append'>
+                            <button onClick={togglePassword} className='btn btn-dark'>{passwordType === 'password' ? <b>Show</b> : <b>Hide</b>}</button>
+                        </div>
+                    </div>
 
                     <button className='btn btn-primary  btn-block mx-1 my-3 font-weight-bold'  onClick={registerUser} disabled={disable}><span>Sign Up</span> <span className={spinStyle}></span> </button>
                     <hr/>

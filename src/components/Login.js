@@ -9,6 +9,7 @@ function Login(props) {
     const [spinStyle, setSpinStyle] = useState('')
     const [loginInfo, setLoginInfo] = useState({loginData: '', pword: ''})
     const [error, setError] = useState('')
+    const [passwordType, setPasswordType] = useState('password')
     const navigate = useNavigate()
 
     const handleInput =(key, value)=>{
@@ -28,6 +29,7 @@ function Login(props) {
             let info = {email: loginInfo.loginData, pword: loginInfo.pword}
             axios.post(url, info).then((res)=>{
                 if (res.data.msg === 'Success') {
+                    sessionStorage.setItem('loginId', res.data.id)
                     navigate('/dashboard')
                     setSpinStyle('')
                     setDisable(false)
@@ -41,6 +43,7 @@ function Login(props) {
             let info = {mobileNumber: loginInfo.loginData, pword: loginInfo.pword}
             axios.post(url, info).then((res)=>{
                 if (res.data.msg === 'Success') {
+                    sessionStorage.setItem('loginId', res.data.id)
                     navigate('/dashboard')
                     setSpinStyle('')
                     setDisable(false)
@@ -54,6 +57,7 @@ function Login(props) {
             let info = {userName: loginInfo.loginData, pword: loginInfo.pword}
             axios.post(url, info).then((res)=>{
                 if (res.data.msg === 'Success') {
+                    sessionStorage.setItem('loginId', res.data.id)
                     navigate('/dashboard')
                     setSpinStyle('')
                     setDisable(false)
@@ -65,6 +69,14 @@ function Login(props) {
             })
         }
     }
+    const togglePassword =()=>{
+        if(passwordType==="password")
+        {
+         setPasswordType("text")
+         return;
+        }
+        setPasswordType("password")
+      }
     return (
         <div>
             <div className='d-flex justify-content-center'>
@@ -82,7 +94,12 @@ function Login(props) {
                     <p></p>
                     }
                     <input onChange={(e)=>handleInput(e.target.name, e.target.value)} type="text" className='form-control m-1' name='loginData' value={loginInfo.loginData} placeholder="Phone number, username or email" />
-                    <input onChange={(e)=>handleInput(e.target.name, e.target.value)} type="text" className='form-control m-1' name='pword' value={loginInfo.pword} placeholder="Password" />
+                    <div className='input-group m-1'>
+                        <input onChange={(e)=>handleInput(e.target.name, e.target.value)} type={passwordType} className='form-control' name='pword' value={loginInfo.pword} placeholder="Password" />
+                        <div className='input-group-append'>
+                            <button onClick={togglePassword} className='btn btn-light'>{passwordType === 'password' ? <b>Show</b> : <b>Hide</b>}</button>
+                        </div>
+                    </div>
                     <button className='btn btn-primary  btn-block mx-1 my-3 font-weight-bold' onClick={loginUser} disabled={disable}><span>Log In</span> <span className={spinStyle}></span></button>
                     <hr/>
                     <p className='text-center'><a href='www.facebook.com' className='text-center'>Forgot Password?</a></p>

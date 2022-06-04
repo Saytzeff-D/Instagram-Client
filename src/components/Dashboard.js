@@ -1,7 +1,28 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 function Dashboard(props) {
+    // const url = 'http://localhost:7000/userData'
+    const url = 'https://node-server-instagram.herokuapp.com/userData'
+    const [user, setUser] = useState({})
+    
+    const navigate = useNavigate()
+
+    const logOut =()=>{
+        sessionStorage.removeItem('loginId')
+        navigate('/login')
+    }
+    useEffect(()=>{
+        if(sessionStorage.getItem('loginId') == null){
+            navigate('/login')
+        }else{
+            const uniqueId = {_id: sessionStorage.getItem('loginId')}
+            axios.post(url, uniqueId).then((res)=>{
+                setUser(res.data)
+            })
+        }
+    })
     return (
         <div>
             <div className="navigation">
@@ -40,9 +61,11 @@ function Dashboard(props) {
                     <a href="/" id="signout" className="navigation-link">
                     <i className="fa fa-sign-out-alt"></i>
                     </a>
+                    <p className='d-block d-md-none text-primary font-weight-bold' style={{cursor: 'pointer'}} onClick={logOut} >Logout</p>
                 </div>
             </div>
-            <Outlet />
+            <br/> <br/>
+            <Outlet context={user} />
         </div>
     )
 }
