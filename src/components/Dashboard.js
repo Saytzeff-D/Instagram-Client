@@ -3,11 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 function Dashboard(props) {
-    // const url = 'http://localhost:7000/userData'
-    const url = 'https://node-server-instagram.herokuapp.com/userData'
-    const [user, setUser] = useState({})
-    
+    const url = `${props.serverUrl}userData`
+    const [user, setUser] = useState({})    
     const navigate = useNavigate()
+    const [pageReady, setPageReady] = useState(false)
 
     const logOut =()=>{
         sessionStorage.removeItem('loginId')
@@ -20,6 +19,9 @@ function Dashboard(props) {
             const uniqueId = {_id: sessionStorage.getItem('loginId')}
             axios.post(url, uniqueId).then((res)=>{
                 setUser(res.data)
+                setPageReady(true)
+            }).catch((err)=>{
+                navigate('/dashboard/')
             })
         }
     })
@@ -65,7 +67,15 @@ function Dashboard(props) {
                 </div>
             </div>
             <br/> <br/>
-            <Outlet context={user} />
+            {
+                pageReady 
+                ?
+                <Outlet context={user} />
+                :
+                <div className='d-flex justify-content-center'>
+                    <img src={require('../assets/loadPage.gif')} className="" style={{backgroundColor: 'red'}} alt="pageGIF"/>
+                </div>
+            }
         </div>
     )
 }

@@ -3,8 +3,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
 function Register(props) {
-    // const url = 'http://localhost:7000/register'
-    const url = 'https://node-server-instagram.herokuapp.com/register'
+    const url = `${props.serverUrl}register`
     const [disable, setDisable] = useState(true)
     const [error, setError] = useState('')
     const [spinStyle, setSpinStyle] = useState('')
@@ -25,7 +24,9 @@ function Register(props) {
                 setDisable(false)
             }
         }).catch((err)=>{
-            console.log(err)
+            setError(err.message)
+            setSpinStyle('')
+            setDisable(false)
         })
     }
 

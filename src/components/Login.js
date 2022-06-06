@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Login(props) {
-    // const url = 'http://localhost:7000/login'
-    const url = 'https://node-server-instagram.herokuapp.com/login'
+    const url = `${props.serverUrl}login`
     const [disable, setDisable] = useState(true)
     const [spinStyle, setSpinStyle] = useState('')
     const [loginInfo, setLoginInfo] = useState({loginData: '', pword: ''})
@@ -38,6 +37,10 @@ function Login(props) {
                     setSpinStyle('')
                     setDisable(false)
                 }
+            }).catch((err)=>{
+                setError(err.message)
+                setSpinStyle('')
+                setDisable(false)
             })
         } else if(/^(([+])([0-9]{1,3}))?([\d]{1,11})$/g.test(loginInfo.loginData)) {
             let info = {mobileNumber: loginInfo.loginData, pword: loginInfo.pword}
@@ -52,6 +55,10 @@ function Login(props) {
                     setSpinStyle('')
                     setDisable(false)
                 }
+            }).catch((err)=>{
+                setError(err.message)
+                setSpinStyle('')
+                setDisable(false)
             })
         } else{
             let info = {userName: loginInfo.loginData, pword: loginInfo.pword}
@@ -66,6 +73,10 @@ function Login(props) {
                     setSpinStyle('')
                     setDisable(false)
                 }
+            }).catch((err)=>{
+                setError(err.message)
+                setSpinStyle('')
+                setDisable(false)
             })
         }
     }
