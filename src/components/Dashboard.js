@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 function Dashboard(props) {
     const url = `${props.serverUrl}userData`
@@ -21,17 +21,18 @@ function Dashboard(props) {
                 setUser(res.data)
                 setPageReady(true)
             }).catch((err)=>{
+                sessionStorage.removeItem('loginId')
                 navigate('/dashboard/')
             })
         }
-    })
+    }, [])
     return (
         <div>
             <div className="navigation">
                 <div className="logo">
-                    <a className="font-weight-bold h1" href="/dashboard">
+                    <Link className="font-weight-bold h1" to="/dashboard">
                     Instagram
-                    </a>
+                    </Link>
                 </div>
                 <div className='navigation-search-container'>
                     <i className="fa fa-search"></i>
@@ -45,10 +46,10 @@ function Dashboard(props) {
                     </div>
                 </div>
                 <div className="navigation-icons">
-                    <a href="/" className="navigation-link">
+                    <Link to="/" className="navigation-link">
                     <i className="fa fa-compass"></i>
-                    </a>
-                    <a className="navigation-link notifica" href='/'>
+                    </Link>
+                    <Link className="navigation-link notifica" to='/'>
                     <i className="fa fa-heart">
                         <div className="notification-bubble-wrapper">
                         <div className="notification-bubble">
@@ -56,13 +57,27 @@ function Dashboard(props) {
                         </div>
                         </div>
                     </i>
-                    </a>
-                    <a href="/" className="navigation-link">
-                    <i className="fa fa-user-circle"></i>
-                    </a>
-                    <a href="/" id="signout" className="navigation-link">
+                    </Link>
+                    <div className="navigation-link dropdown">
+                        {
+                            pageReady
+                            ?
+                                user.image_url !== ''
+                                ?
+                                <i className='fa'><img src={user.image_url} alt="profilePic" width="25px" height="25px" className='rounded-circle' /></i>
+                                :
+                                <i className='fa'><img src={require("../assets/avatar.jpg")} alt="profilePic" width="25px" height="25px" className='rounded-circle'/></i>
+                            :
+                            ''
+                        }
+                        <div className='dropdown-content'>
+                            <Link className='' to={`/${user.userName}`}>My Profile</Link>
+                            <Link className='' to="/dashboard/editProfile">Edit Profile</Link>
+                        </div>
+                    </div>
+                    <Link to="/" id="signout" className="navigation-link">
                     <i className="fa fa-sign-out-alt"></i>
-                    </a>
+                    </Link>
                     <p className='d-block d-md-none text-primary font-weight-bold' style={{cursor: 'pointer'}} onClick={logOut} >Logout</p>
                 </div>
             </div>

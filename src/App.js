@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from './components/Dashboard';
+import EditProfile from './components/EditProfile';
 import Home from './components/Home';
 import Login from './components/Login'
 import Register from './components/Register';
@@ -16,6 +17,7 @@ function App() {
          <Route path='/register' element={<Register serverUrl={server}/>} />
          <Route path='/dashboard' element={<Dashboard serverUrl={server}/>} >
            <Route path='/dashboard/' element={<Home />} />
+           <Route path='/dashboard/editProfile' element={<EditProfile serverUrl={server} />} />
          </Route>
        </Routes>
     </div>
