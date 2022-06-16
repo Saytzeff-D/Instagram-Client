@@ -25,7 +25,7 @@ function Dashboard(props) {
                 navigate('/dashboard/')
             })
         }
-    }, [])
+    }, [url, navigate])
     return (
         <div>
             <div className="navigation">

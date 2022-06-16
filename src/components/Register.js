@@ -47,6 +47,9 @@ function Register(props) {
         }
         setPasswordType("password")
       }
+    const closeAlert = ()=>{
+        setError('')
+    }
     return (
         <div>
             <div className='d-flex justify-content-center'>
@@ -58,7 +61,7 @@ function Register(props) {
                 error !== '' 
                 ? 
                 <div className='alert alert-danger alert-dismissible'>
-                <button type="button" className="close" data-dismiss="alert">&times;</button>
+                <button type="button" className="close" data-dismiss="alert" onClick={closeAlert}>&times;</button>
                     {error}
                 </div> 
                 : 

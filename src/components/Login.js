@@ -20,6 +20,9 @@ function Login(props) {
             setDisable(true)
         }
     }
+    const closeAlert = ()=>{
+        setError('')
+    }
 
     const loginUser =()=>{
         setSpinStyle('spinner-grow spinner-grow-sm')
@@ -98,7 +101,7 @@ function Login(props) {
                     error !== '' 
                     ? 
                     <div className='alert alert-danger alert-dismissible'>
-                    <button type="button" className="close" data-dismiss="alert">&times;</button>
+                    <button type="button" className="close" data-dismiss="alert" onClick={closeAlert}>&times;</button>
                         {error}
                     </div> 
                     : 
