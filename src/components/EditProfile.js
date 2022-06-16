@@ -4,41 +4,64 @@ import { useOutletContext, useNavigate } from 'react-router-dom';
 
 function EditProfile(props) {
     const navigate = useNavigate()
-    const url = `${props.serverUrl}profilePhoto`
-     const user  = useOutletContext()
-    //  const [profilePhoto, setProfilePhoto] = useState(user.image_url)
+    const [editBtnDisable, setEditBtnDisable] = useState(true)
+    const user  = useOutletContext()
+    const [editObj, setEditObj] = useState(user)
+    const {serverUrl} = props
+    const [photoUploadStatus, setPhotoUploadStatus] = useState(false)
+    const [editStatus, setEditStatus] = useState(false)
     const pickPhoto =()=>{
         document.getElementById('photo').click()
     }
     const uploadPhoto =(e)=>{
+        setPhotoUploadStatus(true)
         const photo = e.target.files[0]
         const reader = new FileReader()
         reader.readAsDataURL(photo)
         reader.onload=()=>{
-            let photoObject = {id: user._id, photo: reader.result, photoName: user.userName}
+            let photoObject = {id: editObj._id, photo: reader.result, photoName: editObj.userName}
             // console.log(photoObject)
-            axios.post(url, photoObject).then((res)=>{
+            axios.post(`${serverUrl}profilePhoto`, photoObject).then((res)=>{
                 console.log(res)
-                // setProfilePhoto(res.data.imageUrl)
                 navigate(0)
             }).catch((err)=>{
+                setPhotoUploadStatus(false)
                 console.log(err)
                 alert('Profile Photo Upload fail')
             })
         }
+    }
+    const handleInputChange = (e)=>{
+        setEditBtnDisable(false)
+        setEditObj({...editObj, [e.target.name]: e.target.value})
+    }
+    const handleSubmit = ()=>{
+        setEditStatus(true)
+        axios.post(`${serverUrl}editProfile`, editObj).then((res)=>{
+            console.log(res.data)
+            navigate(0)
+        }).catch((err)=>{
+            console.log(err.message)
+            setEditStatus(false)
+            alert(err.message)
+        })
     }
     return (
         <div className='mt-5'>
             <div className='container w-75 mx-auto border bg-white'>
                 <div className='d-flex px-2 py-2'>
                     <div>
-                    {
-                        user.image_url !== ''
-                        ?
-                        <img src={user.image_url} alt="profilePic" width="50px" height="50px" className='rounded-circle'/>
-                        :
-                        <img src={require("../assets/avatar.jpg")} alt="profilePic" width="50px" height="50px" className='rounded-circle'/>
-                    }
+                        {
+                            photoUploadStatus
+                            ?
+                            <span className='spinner-border text-danger'></span>
+                            :
+                                user.image_url !== ''
+                                ?
+                                <img src={user.image_url} alt="profilePic" width="50px" height="50px" className='rounded-circle'/>
+                                :
+                                <img src={require("../assets/avatar.jpg")} alt="profilePic" width="50px" height="50px" className='rounded-circle'/>
+                        }
                     </div>
                     <div className='mx-3'>
                         <span className='font-weight-bold'>{user.userName}</span><br/>
@@ -53,7 +76,7 @@ function EditProfile(props) {
                             <div className='form-row'>
                                 <label className='col-md-2 font-weight-bold'>Name</label>
                                 <div className='col-md-10'>
-                                    <input className='form-control' />
+                                    <input onChange={handleInputChange} className='form-control' name="fullName" value={editObj.fullName} />
                                     <br/>
                                     <p className='text-muted' style={{fontSize: '15px'}}>Help people discover your account by using the name you're known by: either your full name, nickname, or business name.</p>
                                 </div>
@@ -68,7 +91,7 @@ function EditProfile(props) {
                             <div className='form-row'>
                                 <label className='col-md-2 font-weight-bold'>Username</label>
                                 <div className='col-md-10'>
-                                    <input className='form-control' />
+                                    <input onChange={handleInputChange} className='form-control' name="userName" value={editObj.userName} />
                                     <br/>
                                     <p className='text-muted' style={{fontSize: '15px'}}>In most cases, you'll be able to change your username back to {user.userName} for another 14 days. Learn More.</p>
                                 </div>
@@ -96,7 +119,7 @@ function EditProfile(props) {
                             <div className='form-row'>
                                 <label className='col-md-2 font-weight-bold'>Bio</label>
                                 <div className='col-md-10'>
-                                    <textarea className='form-control'></textarea>
+                                    <textarea onChange={handleInputChange} className='form-control' name="bio" value={editObj.bio}></textarea>
                                 </div>
                             </div>
                         </div>
@@ -123,7 +146,7 @@ function EditProfile(props) {
                             <div className='form-row'>
                                 <label className='col-md-2 font-weight-bold'>E-mail</label>
                                 <div className='col-md-10'>
-                                    <input className='form-control' />
+                                    <input onChange={handleInputChange} className='form-control' name="email" value={editObj.email} />
                                 </div>
                             </div>
                         </div>
@@ -136,7 +159,7 @@ function EditProfile(props) {
                             <div className='form-row'>
                                 <label className='col-md-2 font-weight-bold'>Phone Number</label>
                                 <div className='col-md-10'>
-                                    <input className='form-control' />
+                                    <input onChange={handleInputChange} className='form-control' name="mobileNumber" value={editObj.mobileNumber} />
                                 </div>
                             </div>
                         </div>
@@ -149,7 +172,14 @@ function EditProfile(props) {
                             <div className='form-row'>
                                 <div className='col-md-2 font-weight-bold'></div>
                                 <div className='col-md-10'>
-                                    <button className='btn btn-primary'>Submit</button>
+                                    <button className='btn btn-primary' disabled={editBtnDisable} onClick={handleSubmit} >Submit</button>
+                                    {
+                                        editStatus
+                                        ?
+                                        <span className='spinner-border text-danger'></span>
+                                        :
+                                        ''
+                                    }
                                 </div>
                             </div>
                         </div>
