@@ -4,10 +4,6 @@ import { useNavigate, useOutletContext } from 'react-router-dom';
 function Home(props) {
     const navigate = useNavigate()
     const user = useOutletContext()
-    const logOut =()=>{
-        sessionStorage.removeItem('loginId')
-        navigate('/login')
-    }
     return (
         <div className=''>
             <div className='container-fluid mt-5'>
@@ -42,7 +38,6 @@ function Home(props) {
                                         </div>
                                     </div>
                                     <div className='col-lg-4'>
-                                    <p className='float-right text-primary font-weight-bold' style={{cursor: 'pointer'}} onClick={logOut} >Logout</p>
                                     </div>
                                 </div>
                                 <p className='text-muted font-weight-bold py-3 px-1'>Suggestions for you</p>

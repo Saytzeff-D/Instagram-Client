@@ -46,17 +46,14 @@ function Dashboard(props) {
                     </div>
                 </div>
                 <div className="navigation-icons">
-                    <Link to="/" className="navigation-link">
-                    <i className="fa fa-compass"></i>
+                    <Link className="navigation-link" to='/dashboard'>
+                    <i className="fa fa-home"></i>
                     </Link>
-                    <Link className="navigation-link notifica" to='/'>
-                    <i className="fa fa-heart">
-                        <div className="notification-bubble-wrapper">
-                        <div className="notification-bubble">
-                            <span className="notifications-count">99</span>
-                        </div>
-                        </div>
-                    </i>
+                    <Link className="navigation-link" to='/dashboard'>
+                    <i className="fa fa-plus"></i>
+                    </Link>
+                    <Link to="/explore" className="navigation-link">
+                    <i className="fa fa-compass"></i>
                     </Link>
                     <div className="navigation-link dropdown">
                         {
@@ -66,19 +63,17 @@ function Dashboard(props) {
                                 ?
                                 <i className='fa'><img src={user.image_url} alt="profilePic" width="25px" height="25px" className='rounded-circle' /></i>
                                 :
-                                <i className='fa'><img src={require("../assets/avatar.jpg")} alt="profilePic" width="25px" height="25px" className='rounded-circle'/></i>
+                                <i className='fa'><img src={require("../assets/avatar.jpg")} alt="profilePic" width="25px" height="25px" className='rounded-circle dropdown-toggle' data-toggle="dropdown" /></i>
                             :
                             ''
                         }
                         <div className='dropdown-content'>
-                            <Link className='' to={`/${user.userName}`}>My Profile</Link>
-                            <Link className='' to="/dashboard/editProfile">Edit Profile</Link>
+                            <Link className='dropdown-item' to={`/dashboard/${user.userName}`}>My Profile</Link>
+                            <Link className='dropdown-item' to="/dashboard/editProfile">Edit Profile</Link>
+                            <div className='dropdown-divider'></div>
+                            <a onClick={logOut} style={{cursor: 'pointer'}}>Logout</a>
                         </div>
                     </div>
-                    <Link to="/" id="signout" className="navigation-link">
-                    <i className="fa fa-sign-out-alt"></i>
-                    </Link>
-                    <p className='d-block d-md-none text-primary font-weight-bold' style={{cursor: 'pointer'}} onClick={logOut} >Logout</p>
                 </div>
             </div>
             <br/> <br/>

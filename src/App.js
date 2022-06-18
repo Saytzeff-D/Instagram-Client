@@ -4,6 +4,7 @@ import Dashboard from './components/Dashboard';
 import EditProfile from './components/EditProfile';
 import Home from './components/Home';
 import Login from './components/Login'
+import Profile from './components/Profile';
 import Register from './components/Register';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
          <Route path='/dashboard' element={<Dashboard serverUrl={server}/>} >
            <Route path='/dashboard/' element={<Home />} />
            <Route path='/dashboard/editProfile' element={<EditProfile serverUrl={server} />} />
+          <Route path='/dashboard/:name' element={<Profile url={server} />}></Route>
          </Route>
        </Routes>
     </div>
