@@ -34,7 +34,13 @@ function Profile(props) {
                 <div className='col-sm-12 col-md-8'>
                 <div className='d-flex'>
                     <div>
-                        <img alt="profilePic" src={profile.image_url} className='rounded-circle img-fluid' width="130px" height="130px" />
+                        {
+                            profile.image_url == ''
+                            ?
+                            <img alt="profilePic" src={require("../assets/avatar.jpg")} className='rounded-circle img-fluid' width="130px" height="130px" />
+                            :
+                            <img alt="profilePic" src={profile.image_url} className='rounded-circle img-fluid' width="130px" height="130px" />
+                        }
                     </div>
                     <div className='px-5'>
                         <p style={{fontWeight: '300', fontSize: '2rem'}}>{profile.userName}</p>

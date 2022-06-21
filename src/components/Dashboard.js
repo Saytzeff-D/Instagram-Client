@@ -1,9 +1,11 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
+import CreatePost from './CreatePost';
 
 function Dashboard(props) {
     const url = `${props.serverUrl}userData`
+    const myRef = useRef()
     const [user, setUser] = useState({})    
     const navigate = useNavigate()
     const [pageReady, setPageReady] = useState(false)
@@ -13,6 +15,7 @@ function Dashboard(props) {
         navigate('/login')
     }
     useEffect(()=>{
+        console.log(user._id)
         if(sessionStorage.getItem('loginId') == null){
             navigate('/login')
         }else{
@@ -50,7 +53,7 @@ function Dashboard(props) {
                     <i className="fa fa-home"></i>
                     </Link>
                     <Link className="navigation-link" to='/dashboard'>
-                    <i className="fa fa-plus"></i>
+                    <i className="fa fa-plus" data-toggle="modal" data-target="#createPost"></i>
                     </Link>
                     <Link to="/explore" className="navigation-link">
                     <i className="fa fa-compass"></i>
@@ -80,7 +83,22 @@ function Dashboard(props) {
             {
                 pageReady 
                 ?
-                <Outlet context={user} />
+                <div>
+                    <div className='modal fade' id="createPost" data-backdrop="static">
+                        <div className='modal-dialog modal-dialog-centered'>
+                            <div className='modal-content'>
+                                <div className='modal-header'>
+                                    <h6 className='modal-title'>Create Post</h6>
+                                    <button type="button" className="close" data-dismiss="modal" onClick={()=>myRef.current.discardPost()} >&times;</button>
+                                </div>
+                                <div className='modal-body'>
+                                    <CreatePost url={props.serverUrl} ref={myRef} userId={user._id} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <Outlet context={user} />
+                </div>
                 :
                 <div className='d-flex justify-content-center'>
                     <img src={require('../assets/loadPage.gif')} className="" style={{backgroundColor: 'red'}} alt="pageGIF"/>
