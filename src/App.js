@@ -17,7 +17,7 @@ function App() {
          <Route path='/login' element={<Login serverUrl={server}/>} />
          <Route path='/register' element={<Register serverUrl={server}/>} />
          <Route path='/dashboard' element={<Dashboard serverUrl={server}/>} >
-           <Route path='/dashboard/' element={<Home />} />
+           <Route path='/dashboard/' element={<Home url={server} />} />
            <Route path='/dashboard/editProfile' element={<EditProfile serverUrl={server} />} />
           <Route path='/dashboard/:name' element={<Profile url={server} />}></Route>
          </Route>

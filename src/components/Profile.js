@@ -12,7 +12,7 @@ function Profile(props) {
     const [pageReady, setPageReady] = useState(false)
 
     useEffect(()=>{
-            axios.post(`${url}fetchProfile`, {userName: name}).then((res)=>{
+            axios.post(`${url}fetchProfile`, {userName: name, userId: sessionStorage.getItem('loginId')}).then((res)=>{
                 console.log(res.data)
                 setProfile(res.data)
                 setPageReady(true)
@@ -27,7 +27,7 @@ function Profile(props) {
             {
                 pageReady
                 ?
-                profile == null
+                profile === '' | null
                 ?
                 <NotFound/>
                 :
@@ -35,7 +35,7 @@ function Profile(props) {
                 <div className='d-flex'>
                     <div>
                         {
-                            profile.image_url == ''
+                            profile.image_url === ''
                             ?
                             <img alt="profilePic" src={require("../assets/avatar.jpg")} className='rounded-circle img-fluid' width="130px" height="130px" />
                             :
@@ -46,7 +46,7 @@ function Profile(props) {
                         <p style={{fontWeight: '300', fontSize: '2rem'}}>{profile.userName}</p>
                         <button className='btn border' onClick={()=>{navigate('/dashboard/editProfile')}} >Edit Profile</button>
                         <div className='d-none d-lg-block'>
-                            <div><span className='px-3'><b>0</b> posts</span> <span className='px-3'><b>0</b> followers</span> <span className='px-3'><b>0</b> following</span></div>
+                            <div><span className='px-3'><b>{profile.postLength}</b> posts</span> <span className='px-3'><b>{profile.followersLength}</b> followers</span> <span className='px-3'><b>{profile.followingLength}</b> following</span></div>
                             <div className='pt-3'>
                                 <span className='font-weight-bold'>{profile.fullName}</span> <br/>
                                 <span>{profile.bio}</span>
@@ -61,13 +61,13 @@ function Profile(props) {
                     </div>
                     <div className='row border-top'>
                         <div className='col-4 text-center'>
-                        <span className='pt-2'><b>0</b> posts</span>
+                        <span className='pt-2'><b>{profile.postLength}</b> posts</span>
                         </div>
                         <div className='col-4 text-center'>
-                        <span className='pt-2'><b>0</b> followers</span>
+                        <span className='pt-2'><b>{profile.followersLength}</b> followers</span>
                         </div>
                         <div className='col-4 text-center'>
-                        <span className='pt-2'><b>0</b> following</span>
+                        <span className='pt-2'><b>{profile.followingLength}</b> following</span>
                         </div>
                     </div>
                 </div>

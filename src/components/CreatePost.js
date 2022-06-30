@@ -48,7 +48,11 @@ const CreatePost = React.forwardRef((props, ref)=> {
                 setDisable(false)
                 alert(res.data)
             }
-        }).catch((err)=>{})
+        }).catch((err)=>{
+            setSpinStyle('')
+            setDisable(false)
+            alert(err.response.data.message)
+        })
     }
     const discardPost = ()=>{
         setViewPickFile('text-center d-block')

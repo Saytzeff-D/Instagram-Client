@@ -15,18 +15,19 @@ function Dashboard(props) {
         navigate('/login')
     }
     useEffect(()=>{
-        console.log(user._id)
         if(sessionStorage.getItem('loginId') == null){
             navigate('/login')
         }else{
-            const uniqueId = {_id: sessionStorage.getItem('loginId')}
+            const uniqueId = {userId: sessionStorage.getItem('loginId')}
             axios.post(url, uniqueId).then((res)=>{
+                console.log(res.data)
                 setUser(res.data)
                 setPageReady(true)
             }).catch((err)=>{
                 sessionStorage.removeItem('loginId')
                 navigate('/dashboard/')
             })
+            
         }
     }, [url, navigate])
     return (
@@ -92,7 +93,7 @@ function Dashboard(props) {
                                     <button type="button" className="close" data-dismiss="modal" onClick={()=>myRef.current.discardPost()} >&times;</button>
                                 </div>
                                 <div className='modal-body'>
-                                    <CreatePost url={props.serverUrl} ref={myRef} userId={user._id} />
+                                    <CreatePost url={props.serverUrl} ref={myRef} userId={user.userId} />
                                 </div>
                             </div>
                         </div>

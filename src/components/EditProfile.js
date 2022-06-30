@@ -20,7 +20,7 @@ function EditProfile(props) {
         const reader = new FileReader()
         reader.readAsDataURL(photo)
         reader.onload=()=>{
-            let photoObject = {id: editObj._id, photo: reader.result, photoName: editObj.userName}
+            let photoObject = {userId: editObj.userId, photo: reader.result, photoName: editObj.userName}
             // console.log(photoObject)
             axios.post(`${serverUrl}profilePhoto`, photoObject).then((res)=>{
                 console.log(res)

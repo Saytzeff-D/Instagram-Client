@@ -27,11 +27,10 @@ function Login(props) {
     const loginUser =()=>{
         setSpinStyle('spinner-grow spinner-grow-sm')
         setDisable(true)
-        if (/^([a-z0-9]+)([@])([a-z]+)([.])([a-z]{1,3})(([.])([a-z]{1,2}))?$/g.test(loginInfo.loginData)) {
-            let info = {email: loginInfo.loginData, pword: loginInfo.pword}
+        let info = {info: loginInfo.loginData, pword: loginInfo.pword}
             axios.post(url, info).then((res)=>{
                 if (res.data.msg === 'Success') {
-                    sessionStorage.setItem('loginId', res.data.id)
+                    sessionStorage.setItem('loginId', res.data.userId)
                     navigate('/dashboard')
                     setSpinStyle('')
                     setDisable(false)
@@ -45,43 +44,61 @@ function Login(props) {
                 setSpinStyle('')
                 setDisable(false)
             })
-        } else if(/^(([+])([0-9]{1,3}))?([\d]{1,11})$/g.test(loginInfo.loginData)) {
-            let info = {mobileNumber: loginInfo.loginData, pword: loginInfo.pword}
-            axios.post(url, info).then((res)=>{
-                if (res.data.msg === 'Success') {
-                    sessionStorage.setItem('loginId', res.data.id)
-                    navigate('/dashboard')
-                    setSpinStyle('')
-                    setDisable(false)
-                } else {
-                    setError(res.data.msg)
-                    setSpinStyle('')
-                    setDisable(false)
-                }
-            }).catch((err)=>{
-                setError(err.message)
-                setSpinStyle('')
-                setDisable(false)
-            })
-        } else{
-            let info = {userName: loginInfo.loginData, pword: loginInfo.pword}
-            axios.post(url, info).then((res)=>{
-                if (res.data.msg === 'Success') {
-                    sessionStorage.setItem('loginId', res.data.id)
-                    navigate('/dashboard')
-                    setSpinStyle('')
-                    setDisable(false)
-                } else {
-                    setError(res.data.msg)
-                    setSpinStyle('')
-                    setDisable(false)
-                }
-            }).catch((err)=>{
-                setError(err.message)
-                setSpinStyle('')
-                setDisable(false)
-            })
-        }
+        // if (/^([a-z0-9]+)([@])([a-z]+)([.])([a-z]{1,3})(([.])([a-z]{1,2}))?$/g.test(loginInfo.loginData)) {
+        //     let info = {email: loginInfo.loginData, pword: loginInfo.pword}
+        //     axios.post(url, info).then((res)=>{
+        //         if (res.data.msg === 'Success') {
+        //             sessionStorage.setItem('loginId', res.data.id)
+        //             navigate('/dashboard')
+        //             setSpinStyle('')
+        //             setDisable(false)
+        //         } else {
+        //             setError(res.data.msg)
+        //             setSpinStyle('')
+        //             setDisable(false)
+        //         }
+        //     }).catch((err)=>{
+        //         setError(err.message)
+        //         setSpinStyle('')
+        //         setDisable(false)
+        //     })
+        // } else if(/^(([+])([0-9]{1,3}))?([\d]{1,11})$/g.test(loginInfo.loginData)) {
+        //     let info = {mobileNumber: loginInfo.loginData, pword: loginInfo.pword}
+        //     axios.post(url, info).then((res)=>{
+        //         if (res.data.msg === 'Success') {
+        //             sessionStorage.setItem('loginId', res.data.id)
+        //             navigate('/dashboard')
+        //             setSpinStyle('')
+        //             setDisable(false)
+        //         } else {
+        //             setError(res.data.msg)
+        //             setSpinStyle('')
+        //             setDisable(false)
+        //         }
+        //     }).catch((err)=>{
+        //         setError(err.message)
+        //         setSpinStyle('')
+        //         setDisable(false)
+        //     })
+        // } else{
+        //     let info = {userName: loginInfo.loginData, pword: loginInfo.pword}
+        //     axios.post(url, info).then((res)=>{
+        //         if (res.data.msg === 'Success') {
+        //             sessionStorage.setItem('loginId', res.data.id)
+        //             navigate('/dashboard')
+        //             setSpinStyle('')
+        //             setDisable(false)
+        //         } else {
+        //             setError(res.data.msg)
+        //             setSpinStyle('')
+        //             setDisable(false)
+        //         }
+        //     }).catch((err)=>{
+        //         setError(err.message)
+        //         setSpinStyle('')
+        //         setDisable(false)
+        //     })
+        // }
     }
     const togglePassword =()=>{
         if(passwordType==="password")
