@@ -8,8 +8,8 @@ import Profile from './components/Profile';
 import Register from './components/Register';
 
 function App() {
-  const server = 'http://localhost:7000/'
-  // const server = 'https://node-server-instagram.herokuapp.com/'
+//   const server = 'http://localhost:7000/'
+  const server = 'https://node-server-instagram.herokuapp.com/'
   return (
     <div>
        <Routes>
