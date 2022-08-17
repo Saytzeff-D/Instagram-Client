@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 
 function Home(props) {
