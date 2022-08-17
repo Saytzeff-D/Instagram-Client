@@ -75,7 +75,7 @@ function Dashboard(props) {
                             <Link className='dropdown-item' to={`/dashboard/${user.userName}`}>My Profile</Link>
                             <Link className='dropdown-item' to="/dashboard/editProfile">Edit Profile</Link>
                             <div className='dropdown-divider'></div>
-                            <a onClick={logOut} style={{cursor: 'pointer'}}>Logout</a>
+                            <span onClick={logOut} style={{cursor: 'pointer'}}>Logout</span>
                         </div>
                     </div>
                 </div>
